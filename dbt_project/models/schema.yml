@@ -1,0 +1,79 @@
+version: 2
+
+seeds:
+  - name: attack_techniques
+    description: Target MITRE ATT&CK techniques and the detection (if any) that covers each.
+    columns:
+      - name: technique_id
+        data_tests: [unique, not_null]
+
+models:
+  - name: stg_security_events
+    description: Normalized, OCSF-inspired security events read from the Parquet lakehouse.
+    columns:
+      - name: event_uid
+        data_tests: [unique, not_null]
+      - name: event_time
+        data_tests: [not_null]
+      - name: class_name
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Authentication", "Process Activity", "Base Event"]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Success", "Failure", "Unknown"]
+      - name: severity_id
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1, 2, 3, 4, 5, 6]
+      - name: device_name
+        data_tests: [not_null]
+
+  - name: detect_bruteforce
+    description: Brute force detections (T1110), escalated when followed by a successful logon.
+    columns:
+      - name: src_ip
+        data_tests: [not_null]
+      - name: severity
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["high", "critical"]
+
+  - name: detect_encoded_powershell
+    description: PowerShell launched with an encoded command (T1059.001).
+    columns:
+      - name: severity
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["medium", "critical"]
+
+  - name: alerts
+    description: Unified alert stream across all detections.
+    columns:
+      - name: alert_time
+        data_tests: [not_null]
+      - name: detection_name
+        data_tests: [not_null]
+
+  - name: detection_coverage
+    description: ATT&CK coverage by detection, including gaps.
+    columns:
+      - name: technique_id
+        data_tests: [unique, not_null]
+      - name: coverage_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["gap", "covered_no_hits", "covered_firing"]
+
+  - name: fct_auth_daily
+    description: Daily authentication facts per host.
+    columns:
+      - name: failure_rate
+        data_tests: [not_null]

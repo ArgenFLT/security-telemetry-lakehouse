@@ -1,0 +1,7 @@
+technique_id,technique_name,tactic,detection_name
+T1110,Brute Force,Credential Access,Brute force authentication
+T1059.001,PowerShell,Execution,Encoded PowerShell command
+T1078,Valid Accounts,Initial Access,
+T1021.001,Remote Desktop Protocol,Lateral Movement,
+T1003,OS Credential Dumping,Credential Access,
+T1053.005,Scheduled Task,Persistence,

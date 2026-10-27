@@ -1,0 +1,21 @@
+name: security_telemetry
+version: "1.0.0"
+config-version: 2
+profile: security_telemetry
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+
+# Run dbt from the repository root so these relative paths resolve:
+#   dbt build --project-dir dbt_project --profiles-dir dbt_project
+vars:
+  lakehouse_path: "data/lakehouse/events"
+  bruteforce_threshold: 5
+
+models:
+  security_telemetry:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

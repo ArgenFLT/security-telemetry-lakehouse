@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Pipeline outputs (regenerate with `make demo`)
+data/raw/
+data/lakehouse/
+data/quarantine/
+data/quality_report.json
+data/warehouse.duckdb
+data/warehouse.duckdb.wal
+
+# dbt
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+logs/
+
+# Airflow
+airflow.db
+airflow-webserver.pid
+
+.DS_Store
+dbt_project/.user.yml
